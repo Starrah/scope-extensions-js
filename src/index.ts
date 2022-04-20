@@ -155,106 +155,178 @@ declare global {
     }
 }
 
-Object.prototype.let = function(this, block) {
-    return block(this!);
-}
+Object.defineProperty(Object.prototype, "let", {
+    enumerable: false,
+    value: function (this, block: any) {
+        return block(this!);
+    }
+})
 
-Object.prototype.also = function(this, block) {
-    block(this!);
-    return this!;
-}
+Object.defineProperty(Object.prototype, "also", {
+    enumerable: false,
+    value: function (this, block: any) {
+        block(this!);
+        return this!;
+    }
+})
 
-Object.prototype.run = function(this, block) {
-    return block.call(this!);
-}
+Object.defineProperty(Object.prototype, "run", {
+    enumerable: false,
+    value: function (this, block: any) {
+        return block.call(this!);
+    }
+})
 
-Object.prototype.apply = function(this, block) {
-    block.call(this!);
-    return this!;
-}
+Object.defineProperty(Object.prototype, "apply", {
+    enumerable: false,
+    value: function (this, block: any) {
+        block.call(this!);
+        return this!;
+    }
+})
 
-Object.prototype.takeIf = function(this, predicate) {
-    return predicate(this!) ? this! : undefined;
-}
+Object.defineProperty(Object.prototype, "takeIf", {
+    enumerable: false,
+    value: function (this, predicate: any) {
+        return predicate(this!) ? this! : undefined;
+    }
+})
 
-Object.prototype.takeUnless = function(this, predicate) {
-    return predicate(this!) ? undefined : this!;
-}
+Object.defineProperty(Object.prototype, "takeUnless", {
+    enumerable: false,
+    value: function (this, predicate: any) {
+        return predicate(this!) ? undefined : this!;
+    }
+})
 
-Number.prototype.let = function(this, block) {
-    return block(this!.valueOf());
-}
+Object.defineProperty(Number.prototype, "let", {
+    enumerable: false,
+    value: function (this, block: any) {
+        return block(this!.valueOf());
+    }
+})
 
-Number.prototype.also = function(this, block) {
-    block(this!.valueOf());
-    return this!.valueOf();
-}
+Object.defineProperty(Number.prototype, "also", {
+    enumerable: false,
+    value: function (this, block: any) {
+        block(this!.valueOf());
+        return this!.valueOf();
+    }
+})
 
-Number.prototype.run = function(this, block) {
-    return block.call(this!.valueOf());
-}
+Object.defineProperty(Number.prototype, "run", {
+    enumerable: false,
+    value: function (this, block: any) {
+        return block.call(this!.valueOf());
+    }
+})
 
-Number.prototype.apply = function(this, block) {
-    block.call(this!.valueOf());
-    return this!.valueOf();
-}
+Object.defineProperty(Number.prototype, "apply", {
+    enumerable: false,
+    value: function (this, block: any) {
+        block.call(this!.valueOf());
+        return this!.valueOf();
+    }
+})
 
-Number.prototype.takeIf = function(this, predicate) {
-    return predicate(this!.valueOf()) ? this!.valueOf() : undefined;
-}
+Object.defineProperty(Number.prototype, "takeIf", {
+    enumerable: false,
+    value: function (this, predicate: any) {
+        return predicate(this!.valueOf()) ? this!.valueOf() : undefined;
+    }
+})
 
-Number.prototype.takeUnless = function(this, predicate) {
-    return predicate(this!.valueOf()) ? undefined : this!.valueOf();
-}
+Object.defineProperty(Number.prototype, "takeUnless", {
+    enumerable: false,
+    value: function (this, predicate: any) {
+        return predicate(this!.valueOf()) ? undefined : this!.valueOf();
+    }
+})
 
-String.prototype.let = function(this, block) {
-    return block(this!.valueOf());
-}
+Object.defineProperty(String.prototype, "let", {
+    enumerable: false,
+    value: function (this, block: any) {
+        return block(this!.valueOf());
+    }
+})
 
-String.prototype.also = function(this, block) {
-    block(this!.valueOf());
-    return this!.valueOf();
-}
+Object.defineProperty(String.prototype, "also", {
+    enumerable: false,
+    value: function (this, block: any) {
+        block(this!.valueOf());
+        return this!.valueOf();
+    }
+})
 
-String.prototype.run = function(this, block) {
-    return block.call(this!.valueOf());
-}
+Object.defineProperty(String.prototype, "run", {
+    enumerable: false,
+    value: function (this, block: any) {
+        return block.call(this!.valueOf());
+    }
+})
 
-String.prototype.apply = function(this, block) {
-    block.call(this!.valueOf());
-    return this!.valueOf();
-}
+Object.defineProperty(String.prototype, "apply", {
+    enumerable: false,
+    value: function (this, block: any) {
+        block.call(this!.valueOf());
+        return this!.valueOf();
+    }
+})
 
-String.prototype.takeIf = function(this, predicate) {
-    return predicate(this!.valueOf()) ? this!.valueOf() : undefined;
-}
+Object.defineProperty(String.prototype, "takeIf", {
+    enumerable: false,
+    value: function (this, predicate: any) {
+        return predicate(this!.valueOf()) ? this!.valueOf() : undefined;
+    }
+})
 
-String.prototype.takeUnless = function(this, predicate) {
-    return predicate(this!.valueOf()) ? undefined : this!.valueOf();
-}
+Object.defineProperty(String.prototype, "takeUnless", {
+    enumerable: false,
+    value: function (this, predicate: any) {
+        return predicate(this!.valueOf()) ? undefined : this!.valueOf();
+    }
+})
 
-Boolean.prototype.let = function(this, block) {
-    return block(this!.valueOf());
-}
+Object.defineProperty(Boolean.prototype, "let", {
+    enumerable: false,
+    value: function (this, block: any) {
+        return block(this!.valueOf());
+    }
+})
 
-Boolean.prototype.also = function(this, block) {
-    block(this!.valueOf());
-    return this!.valueOf();
-}
+Object.defineProperty(Boolean.prototype, "also", {
+    enumerable: false,
+    value: function (this, block: any) {
+        block(this!.valueOf());
+        return this!.valueOf();
+    }
+})
 
-Boolean.prototype.run = function(this, block) {
-    return block.call(this!.valueOf());
-}
+Object.defineProperty(Boolean.prototype, "run", {
+    enumerable: false,
+    value: function (this, block: any) {
+        return block.call(this!.valueOf());
+    }
+})
 
-Boolean.prototype.apply = function(this, block) {
-    block.call(this!.valueOf());
-    return this!.valueOf();
-}
+Object.defineProperty(Boolean.prototype, "apply", {
+    enumerable: false,
+    value: function (this, block: any) {
+        block.call(this!.valueOf());
+        return this!.valueOf();
+    }
+})
 
-Boolean.prototype.takeIf = function(this, predicate) {
-    return predicate && predicate(this!.valueOf()) || this!.valueOf() ? this!.valueOf() : undefined;
-}
+Object.defineProperty(Boolean.prototype, "takeIf", {
+    enumerable: false,
+    value: function (this, predicate: any) {
+        return predicate && predicate(this!.valueOf()) || this!.valueOf() ? this!.valueOf() : undefined;
+    }
+})
 
-Boolean.prototype.takeUnless = function(this, predicate) {
-    return predicate && predicate(this!.valueOf()) || this!.valueOf() ? undefined : this!.valueOf();
-}
+Object.defineProperty(Boolean.prototype, "takeUnless", {
+    enumerable: false,
+    value: function (this, predicate: any) {
+        return predicate && predicate(this!.valueOf()) || this!.valueOf() ? undefined : this!.valueOf();
+    }
+})
