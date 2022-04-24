@@ -1,4 +1,4 @@
-import "../src/index";
+import "../src/prototype";
 
 describe("let", () => {
     test("works with object", () => {

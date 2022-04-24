@@ -1,332 +1,106 @@
-export {};
+export class Wrapper<T> {
+    value: T
 
-declare global {
-    interface Object {
-        /**
-         * Calls the specified function block with `this` value as its argument and returns its result
-         * @param block - The function to be executed with `this` as argument
-         * @returns `block`'s result
-         */
-        let<T, R>(this: T | null | undefined, block: (it: T) => R): R;
-        /**
-         * Calls the specified function block with `this` value as its argument and returns `this` value
-         * @param block - The function to be executed with `this` as argument
-         * @returns `this`
-         */
-        also<T>(this: T | null | undefined, block: (it: T) => void): T;
-        /**
-         * Calls the specified function block with `this` value as its receiver and returns its value
-         * @param block - The function to be executed with `this` as context
-         * @returns `block`'s result
-         */
-        run<T, R>(this: T | null | undefined, block: (this: T) => R): R;
-        /**
-         * Calls the specified function block with `this` value as its receiver and returns `this` value
-         * @param block - The function to be executed with `this` as context
-         * @returns `this`
-         */
-        apply<T>(this: T | null | undefined, block: (this: T) => void): T;
-        /**
-         * Returns `this` value if it satisfies the given predicate or `undefined` if it doesn't
-         * @param predicate - The function to be executed with `this` as argument and returns a truthy or falsy value
-         * @returns `this` or `undefined`
-         */
-        takeIf<T>(this: T | null | undefined, predicate: (it: T) => boolean): T | undefined;
-        /**
-         * Returns `this` value if it does not satisfy the given predicate or `undefined` if it does
-         * @param predicate - The function to be executed with `this` as argument and returns a truthy or falsy value
-         * @returns `this` or `undefined`
-         */
-        takeUnless<T>(this: T | null | undefined, predicate: (it: T) => boolean): T | undefined;
+    constructor(value: T) {
+        this.value = value
     }
-    interface Number {
-        /**
-         * Calls the specified function block with `this` value as its argument and returns its result
-         * @param block - The function to be executed with `this` as argument
-         * @returns `block`'s result
-         */
-        let<R>(this: Number | null | undefined, block: (it: number) => R): R;
-        /**
-         * Calls the specified function block with `this` value as its argument and returns `this` value
-         * @param block - The function to be executed with `this` as argument
-         * @returns `this`
-         */
-        also(this: Number | null | undefined, block: (it: number) => void): number;
-        /**
-         * Calls the specified function block with `this` value as its receiver and returns its value
-         * @param block - The function to be executed with `this` as context
-         * @returns `block`'s result
-         */
-        run<R>(this: Number | null | undefined, block: (this: number) => R): R;
-        /**
-         * Calls the specified function block with `this` value as its receiver and returns `this` value
-         * @param block - The function to be executed with `this` as context
-         * @returns `this`
-         */
-        apply(this: Number | null | undefined, block: (this: number) => void): number;
-        /**
-         * Returns `this` value if it satisfies the given predicate or `undefined` if it doesn't
-         * @param predicate - The function to be executed with `this` as argument and returns a truthy or falsy value
-         * @returns `this` or `undefined`
-         */
-        takeIf(this: Number | null | undefined, predicate: (it: number) => boolean): number | undefined;
-        /**
-         * Returns `this` value if it does not satisfy the given predicate or `undefined` if it does
-         * @param predicate - The function to be executed with `this` as argument and returns a truthy or falsy value
-         * @returns `this` or `undefined`
-         */
-        takeUnless(this: Number | null | undefined, predicate: (it: number) => boolean): number | undefined;
+
+    /**
+     * Get the value wrapped by `this` wrapper.
+     * @returns the wrapped value, whose type is `T`
+     */
+    item(): T {
+        return this.value
     }
-    interface String {
-        /**
-         * Calls the specified function block with `this` value as its argument and returns its result
-         * @param block - The function to be executed with `this` as argument
-         * @returns `block`'s result
-         */
-        let<R>(this: String | null | undefined, block: (it: string) => R): R;
-        /**
-         * Calls the specified function block with `this` value as its argument and returns `this` value
-         * @param block - The function to be executed with `this` as argument
-         * @returns `this`
-         */
-        also(this: String | null | undefined, block: (it: string) => void): string;
-        /**
-         * Calls the specified function block with `this` value as its receiver and returns its value
-         * @param block - The function to be executed with `this` as context
-         * @returns `block`'s result
-         */
-        run<R>(this: String | null | undefined, block: (this: string) => R): R;
-        /**
-         * Calls the specified function block with `this` value as its receiver and returns `this` value
-         * @param block - The function to be executed with `this` as context
-         * @returns `this`
-         */
-        apply(this: String | null | undefined, block: (this: string) => void): string;
-        /**
-         * Returns `this` value if it satisfies the given predicate or `undefined` if it doesn't
-         * @param predicate - The function to be executed with `this` as argument and returns a truthy or falsy value
-         * @returns `this` or `undefined`
-         */
-        takeIf(this: String | null | undefined, predicate: (it: string) => boolean): string | undefined;
-        /**
-         * Returns `this` value if it does not satisfy the given predicate or `undefined` if it does
-         * @param predicate - The function to be executed with `this` as argument and returns a truthy or falsy value
-         * @returns `this` or `undefined`
-         */
-        takeUnless(this: String | null | undefined, predicate: (it: string) => boolean): string | undefined;
+
+    /**
+     * Calls the specified function block with `this` value as its argument and returns a `Wrapper` that wraps its
+     * result when the result is not undefined, or return undefined.
+     * @param block - The function to be executed with `this` as argument
+     * @returns a `Wrapper` that wraps `block`'s result, or undefined.
+     */
+    let<R>(block: (it: T) => R): Wrapper<R> | undefined {
+        const result = block(this.value);
+        if (result !== undefined) return new Wrapper<R>(result);
     }
-    interface Boolean {
-        /**
-         * Calls the specified function block with `this` value as its argument and returns its result
-         * @param block - The function to be executed with `this` as argument
-         * @returns `block`'s result
-         */
-        let<R>(this: Boolean | null | undefined, block: (it: boolean) => R): R;
-        /**
-         * Calls the specified function block with `this` value as its argument and returns `this` value
-         * @param block - The function to be executed with `this` as argument
-         * @returns `this`
-         */
-        also(this: Boolean | null | undefined, block: (it: boolean) => void): boolean;
-        /**
-         * Calls the specified function block with `this` value as its receiver and returns its value
-         * @param block - The function to be executed with `this` as context
-         * @returns `block`'s result
-         */
-        run<R>(this: Boolean | null | undefined, block: (this: boolean) => R): R;
-        /**
-         * Calls the specified function block with `this` value as its receiver and returns `this` value
-         * @param block - The function to be executed with `this` as context
-         * @returns `this`
-         */
-        apply(this: Boolean | null | undefined, block: (this: boolean) => void): boolean;
-        /**
-         * Returns `this` value if it satisfies the given predicate or `undefined` if it doesn't
-         * @param predicate - The function to be executed with `this` as argument and returns a truthy or falsy value
-         * @returns `this` or `undefined`
-         */
-        takeIf(this: Boolean | null | undefined, predicate?: (it: boolean) => boolean): boolean | undefined;
-        /**
-         * Returns `this` value if it does not satisfy the given predicate or `undefined` if it does
-         * @param predicate - The function to be executed with `this` as argument and returns a truthy or falsy value
-         * @returns `this` or `undefined`
-         */
-        takeUnless(this: Boolean | null | undefined, predicate?: (it: boolean) => boolean): boolean | undefined;
+
+    /**
+     * Calls the specified function block with `this` value as its argument and returns a `Wrapper` that wraps its
+     * result, regardless whether the result is undefined or not.
+     * @param block - The function to be executed with `this` as argument
+     * @returns a `Wrapper` that wraps `block`'s result
+     */
+    letW<R>(block: (it: T) => R): Wrapper<R> {
+        const result = block(this.value);
+        return new Wrapper<R>(result);
+    }
+
+    /**
+     * Calls the specified function block with `this` value as its argument and returns `this` value
+     * @param block - The function to be executed with `this` as argument
+     * @returns `this`, which is a Wrapper
+     */
+    also(block: (it: T) => void): Wrapper<T> {
+        block(this.value);
+        return this;
+    }
+
+    /**
+     * Calls the specified function block with `this` value as its receiver and returns a `Wrapper` that wraps its
+     * result when the result is not undefined, or return undefined.
+     * @param block - The function to be executed with `this` as context
+     * @returns a `Wrapper` that wraps `block`'s result, or undefined.
+     */
+    run<R>(block: (this: T) => R): Wrapper<R> | undefined {
+        const result = block.call(this.value);
+        if (result !== undefined) return new Wrapper<R>(result);
+    }
+
+    /**
+     * Calls the specified function block with `this` value as its receiver and returns a `Wrapper` that wraps its
+     * result, regardless whether the result is undefined or not.
+     * @param block - The function to be executed with `this` as context
+     * @returns a `Wrapper` that wraps `block`'s result
+     */
+    runW<R>(block: (this: T) => R): Wrapper<R> {
+        const result = block.call(this.value);
+        return new Wrapper<R>(result);
+    }
+
+    /**
+     * Calls the specified function block with `this` value as its receiver and returns `this` value
+     * @param block - The function to be executed with `this` as context
+     * @returns `this`, which is a Wrapper
+     */
+    apply(block: (this: T) => void): Wrapper<T> {
+        block.call(this.value);
+        return this;
+    }
+
+    /**
+     * Returns `this` value if it satisfies the given predicate or `undefined` if it doesn't
+     * @param predicate - The function to be executed with `this` as argument and returns a truthy or falsy value
+     * @returns `this` which is still a Wrapper or `undefined`
+     */
+    takeIf(predicate: (it: T) => boolean): Wrapper<T> | undefined {
+        return predicate(this.value) ? this : undefined;
+    }
+
+    /**
+     * Returns `this` value if it does not satisfy the given predicate or `undefined` if it does
+     * @param predicate - The function to be executed with `this` as argument and returns a truthy or falsy value
+     * @returns `this` which is still a Wrapper or `undefined`
+     */
+    takeUnless(predicate: (it: T) => boolean): Wrapper<T> | undefined {
+        return predicate(this.value) ? undefined : this;
     }
 }
 
-Object.defineProperty(Object.prototype, "let", {
-    enumerable: false,
-    value: function (this, block: any) {
-        return block(this!);
-    }
-})
+export function use<T>(value: T | undefined): Wrapper<T> | undefined {
+    if (value !== undefined) return new Wrapper<T>(value)
+}
 
-Object.defineProperty(Object.prototype, "also", {
-    enumerable: false,
-    value: function (this, block: any) {
-        block(this!);
-        return this!;
-    }
-})
+// @ts-ignore
+if (typeof window === "object") window.use = use
 
-Object.defineProperty(Object.prototype, "run", {
-    enumerable: false,
-    value: function (this, block: any) {
-        return block.call(this!);
-    }
-})
-
-Object.defineProperty(Object.prototype, "apply", {
-    enumerable: false,
-    value: function (this, block: any) {
-        block.call(this!);
-        return this!;
-    }
-})
-
-Object.defineProperty(Object.prototype, "takeIf", {
-    enumerable: false,
-    value: function (this, predicate: any) {
-        return predicate(this!) ? this! : undefined;
-    }
-})
-
-Object.defineProperty(Object.prototype, "takeUnless", {
-    enumerable: false,
-    value: function (this, predicate: any) {
-        return predicate(this!) ? undefined : this!;
-    }
-})
-
-Object.defineProperty(Number.prototype, "let", {
-    enumerable: false,
-    value: function (this, block: any) {
-        return block(this!.valueOf());
-    }
-})
-
-Object.defineProperty(Number.prototype, "also", {
-    enumerable: false,
-    value: function (this, block: any) {
-        block(this!.valueOf());
-        return this!.valueOf();
-    }
-})
-
-Object.defineProperty(Number.prototype, "run", {
-    enumerable: false,
-    value: function (this, block: any) {
-        return block.call(this!.valueOf());
-    }
-})
-
-Object.defineProperty(Number.prototype, "apply", {
-    enumerable: false,
-    value: function (this, block: any) {
-        block.call(this!.valueOf());
-        return this!.valueOf();
-    }
-})
-
-Object.defineProperty(Number.prototype, "takeIf", {
-    enumerable: false,
-    value: function (this, predicate: any) {
-        return predicate(this!.valueOf()) ? this!.valueOf() : undefined;
-    }
-})
-
-Object.defineProperty(Number.prototype, "takeUnless", {
-    enumerable: false,
-    value: function (this, predicate: any) {
-        return predicate(this!.valueOf()) ? undefined : this!.valueOf();
-    }
-})
-
-Object.defineProperty(String.prototype, "let", {
-    enumerable: false,
-    value: function (this, block: any) {
-        return block(this!.valueOf());
-    }
-})
-
-Object.defineProperty(String.prototype, "also", {
-    enumerable: false,
-    value: function (this, block: any) {
-        block(this!.valueOf());
-        return this!.valueOf();
-    }
-})
-
-Object.defineProperty(String.prototype, "run", {
-    enumerable: false,
-    value: function (this, block: any) {
-        return block.call(this!.valueOf());
-    }
-})
-
-Object.defineProperty(String.prototype, "apply", {
-    enumerable: false,
-    value: function (this, block: any) {
-        block.call(this!.valueOf());
-        return this!.valueOf();
-    }
-})
-
-Object.defineProperty(String.prototype, "takeIf", {
-    enumerable: false,
-    value: function (this, predicate: any) {
-        return predicate(this!.valueOf()) ? this!.valueOf() : undefined;
-    }
-})
-
-Object.defineProperty(String.prototype, "takeUnless", {
-    enumerable: false,
-    value: function (this, predicate: any) {
-        return predicate(this!.valueOf()) ? undefined : this!.valueOf();
-    }
-})
-
-Object.defineProperty(Boolean.prototype, "let", {
-    enumerable: false,
-    value: function (this, block: any) {
-        return block(this!.valueOf());
-    }
-})
-
-Object.defineProperty(Boolean.prototype, "also", {
-    enumerable: false,
-    value: function (this, block: any) {
-        block(this!.valueOf());
-        return this!.valueOf();
-    }
-})
-
-Object.defineProperty(Boolean.prototype, "run", {
-    enumerable: false,
-    value: function (this, block: any) {
-        return block.call(this!.valueOf());
-    }
-})
-
-Object.defineProperty(Boolean.prototype, "apply", {
-    enumerable: false,
-    value: function (this, block: any) {
-        block.call(this!.valueOf());
-        return this!.valueOf();
-    }
-})
-
-Object.defineProperty(Boolean.prototype, "takeIf", {
-    enumerable: false,
-    value: function (this, predicate: any) {
-        return predicate && predicate(this!.valueOf()) || this!.valueOf() ? this!.valueOf() : undefined;
-    }
-})
-
-Object.defineProperty(Boolean.prototype, "takeUnless", {
-    enumerable: false,
-    value: function (this, predicate: any) {
-        return predicate && predicate(this!.valueOf()) || this!.valueOf() ? undefined : this!.valueOf();
-    }
-})
+export default use
